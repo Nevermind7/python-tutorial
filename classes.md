@@ -5,6 +5,10 @@ tkinter GUI's before I understood how they work. Everything I did with
 classes worked, but I didn't understand how. Hopefully you'll first
 learn to understand classes, and then learn to use them.
 
+This tutorial assumes that you know how functions work and how to
+create your own functions with the `def` keyword. If you don't, I
+highly recommend learning that first, and then moving to classes.
+
 ### Why should I use custom classes in my projects?
 
 Python comes with a lot of classes that you are already familiar with.
@@ -37,7 +41,21 @@ string.
 >>> 
 ```
 
-Let's say you make a program that processes data about website. With a
+We can also get an instance's class with `type()`:
+
+```py
+>>> type('')
+<class 'str'>
+>>> type(0)
+<class 'int'>
+>>> type([])
+<class 'list'>
+>>> type({})
+<class 'dict'>
+>>> 
+```
+
+Let's say you make a program that processes data about websites. With a
 custom class, you're not limited to `str`, `int` and other classes
 Python comes with. Instead you can define a Website class, and make
 Websites and process information about websites directly. Defining your
@@ -62,6 +80,13 @@ Let's use it to define an empty class.
 <class '__main__.Website'>
 >>> 
 ```
+
+_**Note:** If you are using Python 2 I highly recommend using
+`class Website(object):` instead of `class Website:`. This creates a
+new-style class instead of an old-style class. Old-style classes are
+different than new-style classes in some ways and not supported in this
+tutorial. In Python 3, there are no old-style classes and
+`class Website(object):` does the same thing as `class Website:`._
 
 Note that I named the class `Website`, not `website`. This way we know
 that it's a class. Built-in classes use lowercase names (like `str`
@@ -103,6 +128,9 @@ True
 
 `url`, `founding_year` and `free_to_use` are not variables, they are
 **attributes**. More specifically, they are **instance attributes**.
+The biggest difference is that variables are accessed by their name,
+and attributes are accessed by typing a name of an object (like
+stackoverflow), then a dot and then the name of the attribute.
 
 If we make another Website, does it have the same `url`, `founding_year`
 and `free_to_use`?
@@ -171,8 +199,11 @@ the `Website` class.
 >>> 
 ```
 
-In most cases it's not recommended to use class attributes. Using
-instance attributes instead is simpler.
+`Website.is_online` is `Website`'s class attribute, and in Python you can
+access class attributes through instances also, so in this case
+`stackoverflow.is_online` points to `Website.is_online`. That can be
+confusing, which is why it's not recommended to use class attributes like
+this. Use instance attributes instead, e.g. `stackoverflow.is_online = True`.
 
 ### Functions and methods
 
@@ -234,12 +265,14 @@ But is `stackoverflow.info` the same thing as `Website.info`?
 
 It's not.
 
-Instead, `stackoverflow.info` is a **method**. Effbot also has a `.info`
-method. So `Website.info(stackoverflow)` does the same thing as
-`stackoverflow.info()`, and when `stackoverflow.info()` is called it
-automatically gets `stackoverflow` as an argument.
+Instead, `stackoverflow.info` is a **method**. If we set a function as a
+class attribute, the instances will have a method with the same name.
+Methods are "links" to the class attribute functions. So
+`Website.info(stackoverflow)` does the same thing as `stackoverflow.info()`,
+and when `stackoverflow.info()` is called it automatically gets
+`stackoverflow` as an argument.
 
-In other words, `Class.method(instance)`  does the same thing as
+In other words, `Class.method(instance)` does the same thing as
 `instance.method()`. This also works with built-in classes, for
 example `'hello'.lower()` is same as `str.lower('hello')`.
 
